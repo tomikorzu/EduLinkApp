@@ -7,16 +7,17 @@ import { Server } from "socket.io";
 import { connectDB } from "../config/db.js";
 // import authRoutes from "../routes/authRoutes.js";
 import { getDB } from "../config/db.js";
-import bcrypt from "bcrypt";
 
-// sign
+// signup
+import { addUser } from "../controllers/addUser.js";
+
+// update
 import {
-  addUser,
   updateUsername,
   updateEmail,
   updatePassword,
   updateFullname,
-} from "../controllers/authController.js";
+} from "../controllers/changeUser.js";
 
 dotenv.config();
 
@@ -64,27 +65,14 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+// Signup
 app.post("/api/users", (req, res) => addUser(req, res));
 
+// Update
 app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
 app.put("/api/users/:userId/email", (req, res) => updateEmail(req, res));
 app.put("/api/users/:userId/password", (req, res) => updatePassword(req, res));
 app.put("/api/users/:userId/fullname", (req, res) => updateFullname(req, res));
-
-// app.put("/api/users", (req, res) => {
-//   if (req.body.username) {
-//     updateUsername(req, res);
-//   } else if (req.body.password) {
-//     updatePassword(req, res);
-//   } else if (req.body.fullname) {
-//     updateFullname(req, res);
-//   } else if (req.body.email) {
-//     updateEmail(req, res);
-//   } else
-//     res
-//       .status(400)
-//       .send("Please provide a username, email, password, or fullname");
-// });
 
 io.on("connection", (socket) => {
   console.log("A user connected");
