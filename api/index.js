@@ -5,8 +5,12 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { connectDB } from "../config/db.js";
-import authRoutes from "../routes/authRoutes.js";
+// import authRoutes from "../routes/authRoutes.js";
 import { getDB } from "../config/db.js";
+import bcrypt from "bcrypt";
+
+// sign
+import { addUser } from "../controllers/authController.js";
 
 dotenv.config();
 
@@ -21,7 +25,7 @@ const staticRoot = join(__dirname, "../public");
 app.use(express.static(staticRoot));
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
+// app.use("/api/auth", authRoutes);
 
 const indexHandler = (req, res) => {
   res.sendFile(join(staticRoot, "index.html"));
@@ -55,14 +59,6 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.post("/api/users", (req, res) => addUser(req, res));
-
-const addUser = async (req, res) => {
-  const { username, email, password, fullname } = req.body;
-
-  if (!username || !email || !password || !fullname) {
-    return res.status(400).send("All fields are required");
-  }
-};
 
 io.on("connection", (socket) => {
   console.log("A user connected");
