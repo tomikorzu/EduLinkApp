@@ -19,6 +19,9 @@ import {
   updateFullname,
 } from "../controllers/changeUser.js";
 
+// delete
+import { deleteUser } from "../controllers/deleteUser.js";
+
 dotenv.config();
 
 const app = express();
@@ -73,6 +76,9 @@ app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
 app.put("/api/users/:userId/email", (req, res) => updateEmail(req, res));
 app.put("/api/users/:userId/password", (req, res) => updatePassword(req, res));
 app.put("/api/users/:userId/fullname", (req, res) => updateFullname(req, res));
+
+// Delete
+app.delete("/api/users/:userId", (req, res) => deleteUser(req, res));
 
 io.on("connection", (socket) => {
   console.log("A user connected");
