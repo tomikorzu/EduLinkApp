@@ -74,25 +74,23 @@ export const updateUsername = async (req, res) => {
   const { userId } = req.params;
 
   const userCheck = verifyUsername(username);
-  if (userCheck !== true) {
-    return res.status(400).send(userCheck);
-  }
+  if (userCheck !== true) return res.status(400).send(userCheck);
 
   try {
     const db = getDB();
-    let userObjectId;
+    const userObjectId = new ObjectId(userId);
 
-    console.log("Received userId:", userId);
-
-    try {
-      userObjectId = new ObjectId(userId);
-    } catch (error) {
-      console.error("ObjectId conversion error:", error);
-      return res.status(400).send("Invalid user ID format");
+    const currentUser = await db
+      .collection("users")
+      .findOne({ _id: userObjectId });
+    if (!currentUser) return res.status(404).send("User not found");
+    if (currentUser.username === username) {
+      return res
+        .status(400)
+        .send("New username cannot be the same as the current username");
     }
 
     const existingUser = await db.collection("users").findOne({ username });
-
     if (existingUser && existingUser._id.toString() !== userId) {
       return res.status(409).send("The username already exists");
     }
