@@ -72,6 +72,66 @@ app.delete("/api/users/:userId/profile-picture", (req, res) =>
   deleteProfilePicture(req, res)
 );
 
+// ********* ISSUES ********* //
+
+// Password
+app.post("/api/users/forgot-password", (req, res) => forgotPassword(req, res));
+app.post("/api/users/reset-password", (req, res) => resetPassword(req, res));
+
+// status
+app.put("/api/users/:userId/status", (req, res) => updateUserStatus(req, res));
+
+// requestFriend and acceptFriend
+app.post("/api/users/:userId/friends", (req, res) => requestFriend(req, res));
+app.put("/api/users/:userId/friends", (req, res) => acceptFriend(req, res));
+
+// getFriends
+app.get("/api/users/:userId/friends", (req, res) => getFriends(req, res));
+
+// getFriendRequests
+app.get("/api/users/:userId/friend-requests", (req, res) =>
+  getFriendRequests(req, res)
+);
+
+// blockPerson
+app.put("/api/users/:userId/block", (req, res) => blockPerson(req, res));
+
+// deleteFriend
+app.delete("/api/users/:userId/friends", (req, res) => deleteFriend(req, res));
+
+//  deleteFriendRequest
+app.delete("/api/users/:userId/friend-requests", (req, res) =>
+  deleteFriendRequest(req, res)
+);
+
+// showBlocked
+app.get("/api/users/:userId/blocked", (req, res) => showBlocked(req, res));
+
+// showActivity
+app.get("/api/users/:userId/activity", (req, res) => showActivity(req, res));
+
+// showMessages
+app.get("/api/users/:userId/messages", (req, res) => showMessages(req, res));
+
+// showNotifications
+app.get("/api/users/:userId/notifications", (req, res) =>
+  showNotifications(req, res)
+);
+
+// showSettings
+app.get("/api/users/:userId/settings", (req, res) => showSettings(req, res));
+
+// showUser
+app.get("/api/users/:userId/user", (req, res) => showUser(req, res));
+
+// showUserStatus
+app.get("/api/users/:userId/user-status", (req, res) =>
+  showUserStatus(req, res)
+);
+
+// showUsers
+app.get("/api/users/search", (req, res) => searchUsers(req, res));
+
 io.on("connection", (socket) => {
   console.log("A user connected");
 
