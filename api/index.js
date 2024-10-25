@@ -10,7 +10,7 @@ import { getDB } from "../config/db.js";
 import bcrypt from "bcrypt";
 
 // sign
-import { addUser } from "../controllers/authController.js";
+import { addUser, updateUsername } from "../controllers/authController.js";
 
 dotenv.config();
 
@@ -59,6 +59,23 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.post("/api/users", (req, res) => addUser(req, res));
+
+app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
+
+// app.put("/api/users", (req, res) => {
+//   if (req.body.username) {
+//     updateUsername(req, res);
+//   } else if (req.body.password) {
+//     updatePassword(req, res);
+//   } else if (req.body.fullname) {
+//     updateFullname(req, res);
+//   } else if (req.body.email) {
+//     updateEmail(req, res);
+//   } else
+//     res
+//       .status(400)
+//       .send("Please provide a username, email, password, or fullname");
+// });
 
 io.on("connection", (socket) => {
   console.log("A user connected");
