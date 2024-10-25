@@ -5,8 +5,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { connectDB } from "../config/db.js";
-// import authRoutes from "../routes/authRoutes.js";
-import { getDB } from "../config/db.js";
 
 // signup
 import { addUser } from "../controllers/addUser.js";
@@ -17,6 +15,7 @@ import {
   updateEmail,
   updatePassword,
   updateFullname,
+  updateProfilePicture,
 } from "../controllers/changeUser.js";
 
 // delete
@@ -35,38 +34,21 @@ const staticRoot = join(__dirname, "../public");
 app.use(express.static(staticRoot));
 app.use(express.json());
 
-// app.use("/api/auth", authRoutes);
-
 const indexHandler = (req, res) => {
   res.sendFile(join(staticRoot, "index.html"));
 };
 
-const getAllUsers = async () => {
-  try {
-    const db = getDB();
+// Obtener un usuario por ID
+// app.get("/api/users/:userId", (req, res) => getUserById(req, res));
 
-    const existingUser = (await db.collection("users").find({}).toArray()).map(
-      (user) => {
-        return {
-          username: user.username,
-          fullname: user.fullname,
-        };
-      }
-    );
-    return existingUser;
-  } catch (err) {
-    console.log(err, "Error fetching users");
-  }
-};
+// Obtener todos los usuarios (opcional, ten cuidado con la privacidad)
+// app.get("/api/users", (req, res) => getAllUsers(req, res));
 
-app.get("/api/users", async (req, res) => {
-  try {
-    const users = await getAllUsers();
-    res.json(users);
-  } catch (err) {
-    console.log(err, "Error fetching users");
-  }
-});
+// Login
+// app.post("/api/users/login", (req, res) => loginUser(req, res));
+
+// Logout (opcional, dependiendo de tu enfoque)
+// app.post("/api/users/logout", (req, res) => logoutUser(req, res));
 
 // Signup
 app.post("/api/users", (req, res) => addUser(req, res));
@@ -76,6 +58,9 @@ app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
 app.put("/api/users/:userId/email", (req, res) => updateEmail(req, res));
 app.put("/api/users/:userId/password", (req, res) => updatePassword(req, res));
 app.put("/api/users/:userId/fullname", (req, res) => updateFullname(req, res));
+app.put("/api/users/:userId/profile-picture", (req, res) =>
+  updateProfilePicture(req, res)
+);
 
 // Delete
 app.delete("/api/users/:userId", (req, res) => deleteUser(req, res));

@@ -154,3 +154,38 @@ export const updateFullname = async (req, res) => {
     return res.status(500).send("Error updating fullname");
   }
 };
+
+export const updateProfilePicture = async (req, res) => {
+  const { image } = req.body;
+  const { userId } = req.params;
+
+  try {
+    const db = getDB();
+    const userObjectId = new ObjectId(userId);
+
+    const currentUser = await db
+      .collection("users")
+      .findOne({ _id: userObjectId });
+    if (!currentUser) return res.status(404).send("User not found");
+    if (currentUser.image === image) {
+      return res
+        .status(400)
+        .send(
+          "New profile picture cannot be the same as the current profile picture"
+        );
+    }
+
+    const result = await db
+      .collection("users")
+      .updateOne({ _id: userObjectId }, { $set: { image } });
+
+    if (result.matchedCount > 0) {
+      return res.status(200).send("Profile picture updated successfully");
+    } else {
+      return res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Error updating profile picture:", error);
+    return res.status(500).send("Error updating profile picture");
+  }
+};

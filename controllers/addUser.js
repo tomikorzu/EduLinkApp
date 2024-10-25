@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 
 import { verifyAll } from "./verifyUser.js";
 
+const defaultImage = "./assets/gm2.jpg";
+
 export const addUser = async (req, res) => {
   const { username, email, password, fullname } = req.body;
 
@@ -64,6 +66,7 @@ const hashPassword = async (db, username, email, password, fullname) => {
     fullname,
     firstSignUp: new Date(),
     status: "active",
+    image: defaultImage,
   };
 
   return await db.collection("users").insertOne(newUser);
