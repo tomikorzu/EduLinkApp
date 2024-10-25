@@ -1,6 +1,12 @@
 import { getDB } from "../config/db.js";
 import bcrypt from "bcrypt";
-import { verifyAll, verifyUsername, verifyEmail } from "./verifyUser.js";
+import {
+  verifyAll,
+  verifyUsername,
+  verifyEmail,
+  veriyPassword,
+  verifyFullname,
+} from "./verifyUser.js";
 import { ObjectId } from "mongodb";
 
 export const addUser = async (req, res) => {
@@ -148,5 +154,33 @@ export const updateEmail = async (req, res) => {
   } catch (error) {
     console.error("Error updating email:", error);
     return res.status(500).send("Error updating email");
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  const { password } = req.body;
+  const { userId } = req.params;
+
+  const userCheck = veriyPassword(password);
+  if (userCheck !== true) return res.status(400).send(userCheck);
+
+  try {
+    const db = getDB();
+    const userObjectId = new ObjectId(userId);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const result = await db
+      .collection("users")
+      .updateOne({ _id: userObjectId }, { $set: { password: hashedPassword } });
+
+    if (result.matchedCount > 0) {
+      return res.status(200).send("Password updated successfully");
+    } else {
+      return res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Error updating password:", error);
+    return res.status(500).send("Error updating password");
   }
 };

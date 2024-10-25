@@ -14,6 +14,7 @@ import {
   addUser,
   updateUsername,
   updateEmail,
+  updatePassword,
 } from "../controllers/authController.js";
 
 dotenv.config();
@@ -66,6 +67,7 @@ app.post("/api/users", (req, res) => addUser(req, res));
 
 app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
 app.put("/api/users/:userId/email", (req, res) => updateEmail(req, res));
+app.put("/api/users/:userId/password", (req, res) => updatePassword(req, res));
 
 // app.put("/api/users", (req, res) => {
 //   if (req.body.username) {
