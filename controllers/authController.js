@@ -184,3 +184,39 @@ export const updatePassword = async (req, res) => {
     return res.status(500).send("Error updating password");
   }
 };
+
+export const updateFullname = async (req, res) => {
+  const { fullname } = req.body;
+  const { userId } = req.params;
+
+  const userCheck = verifyFullname(fullname);
+  if (userCheck !== true) return res.status(400).send(userCheck);
+
+  try {
+    const db = getDB();
+    const userObjectId = new ObjectId(userId);
+
+    const currentUser = await db
+      .collection("users")
+      .findOne({ _id: userObjectId });
+    if (!currentUser) return res.status(404).send("User not found");
+    if (currentUser.fullname === fullname) {
+      return res
+        .status(400)
+        .send("New fullname cannot be the same as the current fullname");
+    }
+
+    const result = await db
+      .collection("users")
+      .updateOne({ _id: userObjectId }, { $set: { fullname } });
+
+    if (result.matchedCount > 0) {
+      return res.status(200).send("Fullname updated successfully");
+    } else {
+      return res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Error updating fullname:", error);
+    return res.status(500).send("Error updating fullname");
+  }
+};
