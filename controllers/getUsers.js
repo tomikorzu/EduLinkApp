@@ -17,3 +17,16 @@ export const getUserById = async (req, res) => {
     return res.status(500).send("Error getting user by ID");
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const db = getDB();
+
+    const users = await db.collection("users").find().toArray();
+
+    return res.status(200).send(users);
+  } catch (error) {
+    console.error("Error getting all users:", error);
+    return res.status(500).send("Error getting all users");
+  }
+};

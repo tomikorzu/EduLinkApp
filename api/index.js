@@ -22,7 +22,7 @@ import {
 import { deleteUser, deleteProfilePicture } from "../controllers/deleteUser.js";
 
 // get
-import { getUserById } from "../controllers/getUsers.js";
+import { getUserById, getAllUsers } from "../controllers/getUsers.js";
 
 dotenv.config();
 
@@ -41,11 +41,11 @@ const indexHandler = (req, res) => {
   res.sendFile(join(staticRoot, "index.html"));
 };
 
-// Obtener un usuario por ID
+// GET
 app.get("/api/users/:userId", (req, res) => getUserById(req, res));
 
 // Obtener todos los usuarios (opcional, ten cuidado con la privacidad)
-// app.get("/api/users", (req, res) => getAllUsers(req, res));
+app.get("/api/users", (req, res) => getAllUsers(req, res));
 
 // Login
 // app.post("/api/users/login", (req, res) => loginUser(req, res));
