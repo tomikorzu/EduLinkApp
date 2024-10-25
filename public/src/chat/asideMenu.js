@@ -2,96 +2,29 @@ import { changePageSetting } from "../utils/mainFunctions.js";
 
 const socket = io();
 
+// import { allUsers } from "../../api/index.js";
+
 let totalUnreadMsg = 0;
 
-const users = [
-  {
-    name: "Tomas Korzusehec de calculta",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12:00",
-    unreadMsg: 0,
-  },
-  {
-    name: "Rodrigez",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 0,
-  },
-  {
-    name: "Luis",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12:00",
-    unreadMsg: 0,
-  },
-  {
-    name: "Tomas",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 0,
-  },
-  {
-    name: "Korzusehec",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12:00",
-    unreadMsg: 0,
-  },
-  {
-    name: "de calculta",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 0,
-  },
-  {
-    name: "Tomas Korzusehec de calculta",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 120,
-  },
-  {
-    name: "Rodrigez",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: -2,
-  },
-  {
-    name: "Luis",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12:00",
-    unreadMsg: 0,
-  },
-  {
-    name: "Tomas",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 0,
-  },
-  {
-    name: "Korzusehec",
-    img: "/src/assets/img/gm2.jpg",
-    lastMsg: "Hello",
-    lastMsgTime: "12:00",
-    unreadMsg: 0,
-  },
-  {
-    name: "de calculta",
-    img: "/src/assets/img/me.jpeg",
-    lastMsg: "Puto",
-    lastMsgTime: "12/02/24",
-    unreadMsg: 0,
-  },
-];
+let users = [];
 
-export const asideMenu = () => {
+// allUsers.then((users) => {
+//   console.log(users);
+// });
+
+const fetchUsers = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/api/users");
+    const users = await response.json();
+    return users;
+  } catch (err) {
+    console.error("Error fetching users", err);
+  }
+};
+
+export const asideMenu = async () => {
+  const allUsers = await fetchUsers();
+  allUsers.forEach((user) => users.push(user));
   const people = document.getElementById("users");
   updateUsers(users, people);
   const searchInput = document.getElementById("search-input");
@@ -105,17 +38,17 @@ export const asideMenu = () => {
 const createUserLayout = (user) => {
   const li = document.createElement("li");
 
-  let unreadMsgValue = getUnreadMessages(user.unreadMsg);
+  // let unreadMsgValue = getUnreadMessages(user.unreadMsg);
 
   li.innerHTML = `
-      <img src="${user.img}" alt="User Image" class="person-image" />
+      <img src="../assets/img/gm2.jpg" alt="User Image" class="person-image" />
       <div class="message-data">
-        <h3 class="person-name">${user.name}</h3>
-        <span class="last-message">${user.lastMsg}</span>
+        <h3 class="person-name">${user.fullname}</h3>
+        <span class="last-message">Holaa</span>
       </div>
       <div>
-        <span class="last-time">${user.lastMsgTime}</span>
-        <span class="unread-messages">${unreadMsgValue}</span>
+        <span class="last-time">lastTimeMsg</span>
+        <span class="unread-messages"></span>
       </div>`;
 
   const unreadMsg = li.querySelector(".unread-messages");

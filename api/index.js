@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { connectDB } from "../config/db.js";
 import authRoutes from "../routes/authRoutes.js";
+import { getDB } from "../config/db.js";
 
 dotenv.config();
 
@@ -26,7 +27,42 @@ const indexHandler = (req, res) => {
   res.sendFile(join(staticRoot, "index.html"));
 };
 
-app.get(/.?/, indexHandler);
+const getAllUsers = async () => {
+  try {
+    const db = getDB();
+
+    const existingUser = (await db.collection("users").find({}).toArray()).map(
+      (user) => {
+        return {
+          username: user.username,
+          fullname: user.fullname,
+        };
+      }
+    );
+    return existingUser;
+  } catch (err) {
+    console.log(err, "Error fetching users");
+  }
+};
+
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await getAllUsers();
+    res.json(users);
+  } catch (err) {
+    console.log(err, "Error fetching users");
+  }
+});
+
+app.post("/api/users", (req, res) => addUser(req, res));
+
+const addUser = async (req, res) => {
+  const { username, email, password, fullname } = req.body;
+
+  if (!username || !email || !password || !fullname) {
+    return res.status(400).send("All fields are required");
+  }
+};
 
 io.on("connection", (socket) => {
   console.log("A user connected");
@@ -34,7 +70,13 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("A user disconnected");
   });
+
+  socket.on("chat message", (m) => {
+    console.log("A user message:", m);
+  });
 });
+
+app.get(/.?/, indexHandler);
 
 connectDB().then(() => {
   server.listen(process.env.PORT, () => {
