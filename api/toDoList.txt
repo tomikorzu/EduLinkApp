@@ -1,0 +1,6 @@
+Usar middleware como jsonwebtoken para tokens JWT
+
+Asegúrate de validar los datos de entrada, especialmente en las rutas POST y PUT. Usar librerías como express-validator o Joi puede prevenir problemas con datos malformados.
+
+Para rutas como app.get("/api/users/:userId/friends"), si la lista de amigos o solicitudes de amistad es muy grande, considera agregar paginación.
+

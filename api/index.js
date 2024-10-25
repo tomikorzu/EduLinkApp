@@ -83,7 +83,7 @@ app.put("/api/users/:userId/status", (req, res) => updateUserStatus(req, res));
 
 // requestFriend and acceptFriend
 app.post("/api/users/:userId/friends", (req, res) => requestFriend(req, res));
-app.put("/api/users/:userId/friends", (req, res) => acceptFriend(req, res));
+app.put("/api/users/:userId/friends/accept", (req, res) => acceptFriend(req, res));
 
 // getFriends
 app.get("/api/users/:userId/friends", (req, res) => getFriends(req, res));
