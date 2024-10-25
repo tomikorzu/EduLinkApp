@@ -21,6 +21,9 @@ import {
 // delete
 import { deleteUser, deleteProfilePicture } from "../controllers/deleteUser.js";
 
+// get
+import { getUserById } from "../controllers/getUsers.js";
+
 dotenv.config();
 
 const app = express();
@@ -39,7 +42,7 @@ const indexHandler = (req, res) => {
 };
 
 // Obtener un usuario por ID
-// app.get("/api/users/:userId", (req, res) => getUserById(req, res));
+app.get("/api/users/:userId", (req, res) => getUserById(req, res));
 
 // Obtener todos los usuarios (opcional, ten cuidado con la privacidad)
 // app.get("/api/users", (req, res) => getAllUsers(req, res));
