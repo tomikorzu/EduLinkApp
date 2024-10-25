@@ -27,3 +27,7 @@ export const loginUser = async (req, res) => {
     return res.status(500).send("Error logging in");
   }
 };
+
+export const logoutUser = async (req, res) => {
+  return res.status(200).send("Logout successful");
+};

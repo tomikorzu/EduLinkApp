@@ -25,7 +25,7 @@ import { deleteUser, deleteProfilePicture } from "../controllers/deleteUser.js";
 import { getUserById, getAllUsers } from "../controllers/getUsers.js";
 
 // login
-import { loginUser } from "../controllers/logUser.js";
+import { loginUser, logoutUser } from "../controllers/logUser.js";
 
 dotenv.config();
 
@@ -46,14 +46,13 @@ const indexHandler = (req, res) => {
 
 // GET
 app.get("/api/users/:userId", (req, res) => getUserById(req, res));
-
 app.get("/api/users", (req, res) => getAllUsers(req, res));
 
 // Login
 app.post("/api/users/login", (req, res) => loginUser(req, res));
 
-// Logout (opcional, dependiendo de tu enfoque)
-// app.post("/api/users/logout", (req, res) => logoutUser(req, res));
+// Logout
+app.post("/api/users/logout", (req, res) => logoutUser(req, res));
 
 // Signup
 app.post("/api/users", (req, res) => addUser(req, res));
