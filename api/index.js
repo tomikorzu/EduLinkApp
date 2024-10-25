@@ -19,7 +19,7 @@ import {
 } from "../controllers/changeUser.js";
 
 // delete
-import { deleteUser } from "../controllers/deleteUser.js";
+import { deleteUser, deleteProfilePicture } from "../controllers/deleteUser.js";
 
 dotenv.config();
 
@@ -64,6 +64,9 @@ app.put("/api/users/:userId/profile-picture", (req, res) =>
 
 // Delete
 app.delete("/api/users/:userId", (req, res) => deleteUser(req, res));
+app.delete("/api/users/:userId/profile-picture", (req, res) =>
+  deleteProfilePicture(req, res)
+);
 
 io.on("connection", (socket) => {
   console.log("A user connected");

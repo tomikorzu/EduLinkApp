@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 import { verifyAll } from "./verifyUser.js";
 
-const defaultImage = "./assets/gm2.jpg";
+export const defaultImage = "./assets/gm2.jpg";
 
 export const addUser = async (req, res) => {
   const { username, email, password, fullname } = req.body;
