@@ -10,7 +10,11 @@ import { getDB } from "../config/db.js";
 import bcrypt from "bcrypt";
 
 // sign
-import { addUser, updateUsername } from "../controllers/authController.js";
+import {
+  addUser,
+  updateUsername,
+  updateEmail,
+} from "../controllers/authController.js";
 
 dotenv.config();
 
@@ -61,6 +65,7 @@ app.get("/api/users", async (req, res) => {
 app.post("/api/users", (req, res) => addUser(req, res));
 
 app.put("/api/users/:userId/username", (req, res) => updateUsername(req, res));
+app.put("/api/users/:userId/email", (req, res) => updateEmail(req, res));
 
 // app.put("/api/users", (req, res) => {
 //   if (req.body.username) {

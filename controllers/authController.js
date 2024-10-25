@@ -1,6 +1,6 @@
 import { getDB } from "../config/db.js";
 import bcrypt from "bcrypt";
-import { verifyAll, verifyUsername } from "./verifyUser.js";
+import { verifyAll, verifyUsername, verifyEmail } from "./verifyUser.js";
 import { ObjectId } from "mongodb";
 
 export const addUser = async (req, res) => {
@@ -107,5 +107,46 @@ export const updateUsername = async (req, res) => {
   } catch (error) {
     console.error("Error updating username:", error);
     return res.status(500).send("Error updating username");
+  }
+};
+
+export const updateEmail = async (req, res) => {
+  const { email } = req.body;
+  const { userId } = req.params;
+
+  const userCheck = verifyEmail(email);
+  if (userCheck !== true) return res.status(400).send(userCheck);
+
+  try {
+    const db = getDB();
+    const userObjectId = new ObjectId(userId);
+
+    const currentUser = await db
+      .collection("users")
+      .findOne({ _id: userObjectId });
+    if (!currentUser) return res.status(404).send("User not found");
+    if (currentUser.email === email) {
+      return res
+        .status(400)
+        .send("New email cannot be the same as the current email");
+    }
+
+    const existingUser = await db.collection("users").findOne({ email });
+    if (existingUser && existingUser._id.toString() !== userId) {
+      return res.status(409).send("The email already exists");
+    }
+
+    const result = await db
+      .collection("users")
+      .updateOne({ _id: userObjectId }, { $set: { email } });
+
+    if (result.matchedCount > 0) {
+      return res.status(200).send("Email updated successfully");
+    } else {
+      return res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Error updating email:", error);
+    return res.status(500).send("Error updating email");
   }
 };
