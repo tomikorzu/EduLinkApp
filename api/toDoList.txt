@@ -4,3 +4,15 @@ Asegúrate de validar los datos de entrada, especialmente en las rutas POST y PU
 
 Para rutas como app.get("/api/users/:userId/friends"), si la lista de amigos o solicitudes de amistad es muy grande, considera agregar paginación.
 
+
+'base de datos: mongodb
+
+apis con express
+
+cyberseguridad actualizarse diariamente
+
+oauth
+
+encriptar mensajes
+
+Tomás,nachp

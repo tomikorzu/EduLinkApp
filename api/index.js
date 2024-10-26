@@ -33,11 +33,11 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const staticRoot = join(__dirname, "../public");
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
+// const staticRoot = join(__dirname, "../public");
 
-app.use(express.static(staticRoot));
+app.use(express.static('public_html'));
 app.use(express.json());
 
 const indexHandler = (req, res) => {
