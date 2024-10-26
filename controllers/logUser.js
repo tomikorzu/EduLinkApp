@@ -21,7 +21,7 @@ export const loginUser = async (req, res) => {
 
     return res
       .status(200)
-      .send("Login successful with user: " + currentUser.username);
+      .json("Login successful with user: " + currentUser.username);
   } catch (error) {
     console.error("Error logging in:", error);
     return res.status(500).send("Error logging in");

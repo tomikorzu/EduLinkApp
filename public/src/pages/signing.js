@@ -36,19 +36,14 @@ const Signin = () => {
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!inputUserName.value || !inputPassword.value) {
-      userAlert("Alert", "Please enter username and password");
-      return;
-    }
-
     try {
-      const response = await fetch("http://localhost:3000/api/auth/signin", {
+      const response = await fetch("http://localhost:3000/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: inputUserName.value,
+          emailOrUsername: inputUserName.value,
           password: inputPassword.value,
         }),
       });
@@ -57,11 +52,10 @@ const Signin = () => {
         const data = await response.json();
         console.log("Sign-in successful:", data);
         navigate("/chat");
-      }
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log("Error Data:", errorData);
-        userAlert("Alert", errorData.message || "Invalid username or password");
+      } else {
+        const data = await response.text();
+        userAlert(data);
+        console.log("Sign-in failed:", data);
       }
     } catch (error) {
       console.log("Error during sign-in:", error.message);
