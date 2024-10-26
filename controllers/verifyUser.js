@@ -68,7 +68,9 @@ export const verifyAll = (username, email, password, fullname) => {
   const passwordCheck = veriyPassword(password);
   const fullnameCheck = verifyFullname(fullname);
 
-  if (usernameCheck !== true) {
+  if ((!username, !email, !password, !fullname)) {
+    return "All fields are required";
+  } else if (usernameCheck !== true) {
     return usernameCheck;
   } else if (emailCheck !== true) {
     return emailCheck;

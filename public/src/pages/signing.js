@@ -1,7 +1,6 @@
 import { changePageSetting } from "../utils/mainFunctions.js";
 import NavbarBtn from "../components/NavbarBtn.js";
 import { navigate } from "../../App.js";
-import { User } from "../utils/variables.js";
 import { userAlert } from "../utils/mainFunctions.js";
 
 const Signin = () => {

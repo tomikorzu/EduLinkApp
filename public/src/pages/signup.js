@@ -1,6 +1,5 @@
 import { changePageSetting, userAlert } from "../utils/mainFunctions.js";
 import { navigate } from "../../App.js";
-import { User } from "../utils/variables.js";
 
 import NavbarBtn from "../components/NavbarBtn.js";
 
@@ -45,37 +44,38 @@ async function submitForm(e) {
   const inputEmail = document.getElementById("email");
   const inputPassword = document.getElementById("password");
 
-  const user = new User(
-    inputUserName.value,
-    inputEmail.value,
-    inputPassword.value,
-    inputFullName.value
-  );
+  try {
+    const response = await fetch("http://localhost:3000/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: inputUserName.value,
+        email: inputEmail.value,
+        password: inputPassword.value,
+        fullname: inputFullName.value,
+      }),
+    });
+    const data = await response.json();
 
-  if (user.verifyAll()) {
-    try {
-      const response = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: inputUserName.value,
-          email: inputEmail.value,
-          password: inputPassword.value,
-          fullname: inputFullName.value,
-        }),
-      });
-
-      if (response.status === 409) {
-        userAlert("alert", "The username or email already exist");
-        return;
-      }
-
-      navigate("/signin");
-    } catch (error) {
-      console.log("Error during signup:", error.message);
+    if (response.status === 400) {
+      userAlert("Alert", data.message);
+      return;
+    } else if (response.status === 409) {
+      userAlert("Alert", data.message);
+      return;
+    } else if (response.status === 201) {
+      userAlert("Success", data.message);
+      navigate("/chat");
+    } else if (response.status === 500) {
+      userAlert("Alert", data.message);
+      return;
+    } else {
+      userAlert("Alert", "Something went wrong, please try again later");
     }
+  } catch (error) {
+    console.log("Error during signup:", error.message);
   }
 }
 
