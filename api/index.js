@@ -33,11 +33,12 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = dirname(__filename);
-// const staticRoot = join(__dirname, "../public");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-app.use(express.static('public_html'));
+const staticRoot = join(__dirname, "../public");
+
+app.use(express.static(staticRoot));
 app.use(express.json());
 
 const indexHandler = (req, res) => {
@@ -83,7 +84,9 @@ app.put("/api/users/:userId/status", (req, res) => updateUserStatus(req, res));
 
 // requestFriend and acceptFriend
 app.post("/api/users/:userId/friends", (req, res) => requestFriend(req, res));
-app.put("/api/users/:userId/friends/accept", (req, res) => acceptFriend(req, res));
+app.put("/api/users/:userId/friends/accept", (req, res) =>
+  acceptFriend(req, res)
+);
 
 // getFriends
 app.get("/api/users/:userId/friends", (req, res) => getFriends(req, res));
