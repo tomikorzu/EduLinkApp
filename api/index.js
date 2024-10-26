@@ -75,6 +75,8 @@ app.delete("/api/users/:userId/profile-picture", (req, res) =>
 
 // ********* ISSUES ********* //
 
+//  ******** En el front hay que crear cartel de bienvenido ********* //
+
 // Password
 app.post("/api/users/forgot-password", (req, res) => forgotPassword(req, res));
 app.post("/api/users/reset-password", (req, res) => resetPassword(req, res));

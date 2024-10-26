@@ -46,15 +46,19 @@ const Signin = () => {
           password: inputPassword.value,
         }),
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Sign-in successful:", data);
+      const data = await response.json();
+      if (response.status === 404) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 400) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 500) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 200) {
+        userAlert("Success", data.message);
         navigate("/chat");
-      } else {
-        const data = await response.text();
-        userAlert(data);
-        console.log("Sign-in failed:", data);
       }
     } catch (error) {
       console.log("Error during sign-in:", error.message);
