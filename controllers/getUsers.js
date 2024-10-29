@@ -9,12 +9,12 @@ export const getUserById = async (req, res) => {
     const userObjectId = new ObjectId(userId);
 
     const user = await db.collection("users").findOne({ _id: userObjectId });
-    if (!user) return res.status(404).send("User not found");
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     return res.status(200).send(user);
   } catch (error) {
     console.error("Error getting user by ID:", error);
-    return res.status(500).send("Error getting user by ID");
+    return res.status(500).json({ message: "Error getting user by ID" });
   }
 };
 
@@ -24,9 +24,9 @@ export const getAllUsers = async (req, res) => {
 
     const users = await db.collection("users").find().toArray();
 
-    return res.status(200).send(users);
+    return res.status(200).json(users);
   } catch (error) {
     console.error("Error getting all users:", error);
-    return res.status(500).send("Error getting all users");
+    return res.status(500).json({ message: "Error getting all users" });
   }
 };

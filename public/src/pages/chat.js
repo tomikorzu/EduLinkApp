@@ -1,5 +1,6 @@
 import { changePageSetting } from "../utils/mainFunctions.js";
 import { asideMenu } from "../chat/asideMenu.js";
+import { asideBar } from "../chat/asideBar.js";
 import { realTimeChat } from "../chat/realTimeChat.js";
 
 const Chat = () => {
@@ -8,11 +9,17 @@ const Chat = () => {
 
   chatLayout();
   asideMenu();
+  asideBar();
   realTimeChat();
 };
 
 const chatLayout = () => {
-  app.innerHTML = `<main class="fade-in chat-main">
+  app.innerHTML = `
+  <header class="aside-bar">
+      <nav id="aside-bar-nav"></nav>
+      <ul id="aside-bar-ul"></ul>
+    </header>
+    <main class="fade-in chat-main">
       <section class="people-container">
         <h1>Chats</h1>
         <input

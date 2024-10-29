@@ -19,6 +19,9 @@
   --person-name-color: #ffffff60;
   --unread-messages-bg: #ffffff60;
   --unread-messages-color: #333;
+
+  /* Aside Bar */
+  --aside-bar-bg: #202c33;
 }
 
 .chat-main {
@@ -36,6 +39,7 @@
   left: 0;
   top: 0;
   height: 100%;
+  margin-left: 70px;
   width: 350px;
   background-color: var(--people-container-bg);
 }
@@ -174,7 +178,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  margin-left: 350px;
+  margin-left: 420px;
 }
 .header-chat {
   align-items: center;
@@ -205,4 +209,20 @@
 .header-chat span {
   color: var(--text-color);
   font-size: 0.75em;
+}
+
+/* Aside Bar */
+
+.aside-bar {
+  position: fixed;
+  left: 0;
+  width: 70px;
+  top: 0;
+  bottom: 0;
+  z-index: 22;
+  background-color: var(--aside-bar-bg);
+}
+
+.aside-bar-btn{
+  
 }

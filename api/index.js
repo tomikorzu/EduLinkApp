@@ -48,6 +48,7 @@ const indexHandler = (req, res) => {
 // GET
 app.get("/api/users/:userId", (req, res) => getUserById(req, res));
 app.get("/api/users", (req, res) => getAllUsers(req, res));
+app.get("/api/users/current-user", (req, res) => getCurrentUser(req, res));
 
 // Login
 app.post("/api/users/login", (req, res) => loginUser(req, res));
