@@ -52,11 +52,11 @@ let sections = [
 ];
 
 export const asideBar = async () => {
-  const userImage = await getUserImage();
-  sections[1].push({
-    title: "Profile",
-    userImage,
-  });
+  // const userImage = await getUserImage();
+  // sections[1].push({
+  //   title: "Profile",
+  //   userImage,
+  // });
 
   const asideBarNav = document.getElementById("aside-bar-nav");
 

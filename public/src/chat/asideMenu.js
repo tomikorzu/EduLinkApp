@@ -6,24 +6,28 @@ const socket = io();
 
 let totalUnreadMsg = 0;
 
-let users = [];
-
 // allUsers.then((users) => {
 //   console.log(users);
 // });
 
-const fetchUsers = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/api/users");
-    const users = await response.json();
-    return users;
-  } catch (err) {
-    console.error("Error fetching users", err);
-  }
-};
+// const fetchUsers = async () => {
+//   try {
+//     const response = await fetch("http://localhost:3000/api/users");
+//     const users = await response.json();
+//     return users;
+//   } catch (err) {
+//     console.error("Error fetching users", err);
+//   }
+// };
+
+let users = [
+  {
+    fullname: "tomas",
+  },
+];
 
 export const asideMenu = async () => {
-  const allUsers = await fetchUsers();
+  // const allUsers = await fetchUsers();
   allUsers.forEach((user) => users.push(user));
   const people = document.getElementById("users");
   updateUsers(users, people);
