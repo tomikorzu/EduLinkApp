@@ -44,39 +44,39 @@ async function submitForm(e) {
   const inputEmail = document.getElementById("email");
   const inputPassword = document.getElementById("password");
 
-  // try {
-  //   const response = await fetch("http://localhost:3000/api/users", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       username: inputUserName.value,
-  //       email: inputEmail.value,
-  //       password: inputPassword.value,
-  //       fullname: inputFullName.value,
-  //     }),
-  //   });
-  //   const data = await response.json();
+  try {
+    const response = await fetch("http://localhost:3000/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: inputUserName.value,
+        email: inputEmail.value,
+        password: inputPassword.value,
+        fullname: inputFullName.value,
+      }),
+    });
+    const data = await response.json();
 
-  //   if (response.status === 400) {
-  //     userAlert("Alert", data.message);
-  //     return;
-  //   } else if (response.status === 409) {
-  //     userAlert("Alert", data.message);
-  //     return;
-  //   } else if (response.status === 201) {
-  //     userAlert("Success", data.message);
-  //     navigate("/chat");
-  //   } else if (response.status === 500) {
-  //     userAlert("Alert", data.message);
-  //     return;
-  //   } else {
-  //     userAlert("Alert", "Something went wrong, please try again later");
-  //   }
-  // } catch (error) {
-  //   console.log("Error during signup:", error.message);
-  // }
+    if (response.status === 400) {
+      userAlert("Alert", data.message);
+      return;
+    } else if (response.status === 409) {
+      userAlert("Alert", data.message);
+      return;
+    } else if (response.status === 201) {
+      userAlert("Success", data.message);
+      navigate("/chat");
+    } else if (response.status === 500) {
+      userAlert("Alert", data.message);
+      return;
+    } else {
+      userAlert("Alert", "Something went wrong, please try again later");
+    }
+  } catch (error) {
+    console.log("Error during signup:", error.message);
+  }
 }
 
 function signupLayout() {

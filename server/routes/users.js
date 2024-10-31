@@ -14,7 +14,7 @@ router.post("/register", validateAll, async (req, res) => {
     db.run(
       `INSERT INTO users (username, email, password, fullname) VALUES (?, ?, ?, ?)`,
       [username, email, hashedPassword, fullname],
-      function (err) {
+      (err) => {
         if (err) {
           return res
             .status(500)
