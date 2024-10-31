@@ -35,34 +35,34 @@ const Signin = () => {
   signInForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const response = await fetch("http://localhost:3000/api/users/login", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       emailOrUsername: inputUserName.value,
-    //       password: inputPassword.value,
-    //     }),
-    //   });
-    //   const data = await response.json();
-    //   if (response.status === 404) {
-    //     userAlert("Alert", data.message);
-    //     return;
-    //   } else if (response.status === 400) {
-    //     userAlert("Alert", data.message);
-    //     return;
-    //   } else if (response.status === 500) {
-    //     userAlert("Alert", data.message);
-    //     return;
-    //   } else if (response.status === 200) {
-    //     userAlert("Success", data.message);
-    //     navigate("/chat");
-    //   }
-    // } catch (error) {
-    //   console.log("Error during sign-in:", error.message);
-    // }
+    try {
+      const response = await fetch("/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          emailOrUsername: inputUserName.value,
+          password: inputPassword.value,
+        }),
+      });
+      const data = await response.json();
+      if (response.status === 404) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 400) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 500) {
+        userAlert("Alert", data.message);
+        return;
+      } else if (response.status === 200) {
+        userAlert("Success", data.message);
+        navigate("/chat");
+      }
+    } catch (error) {
+      console.log("Error during sign-in:", data.message);
+    }
   });
 };
 
