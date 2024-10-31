@@ -1,5 +1,5 @@
 import Home from "./src/pages/home.js";
-import SignIn from "./src/pages/signing.js";
+import SignIn from "./src/pages/signin.js";
 import SignUp from "./src/pages/signup.js";
 import NotFound from "./src/pages/notFound.js";
 import Chat from "./src/pages/chat.js";
