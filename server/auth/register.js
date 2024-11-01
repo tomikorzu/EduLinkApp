@@ -1,5 +1,7 @@
-import db from "../config/users.js";
+import db from "../config/users-db.js";
 import bcrypt from "bcrypt";
+
+import roles from "../constants/roles.js";
 
 export const register = async (req, res) => {
   const { username, email, password, fullname } = req.body;
@@ -31,8 +33,8 @@ export const register = async (req, res) => {
 
     await new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO users (username, email, password, fullname) VALUES (?, ?, ?, ?)`,
-        [username, email, hashedPassword, fullname],
+        `INSERT INTO users (username, email, password, fullname, role) VALUES (?, ?, ?, ?, ?)`,
+        [username, email, hashedPassword, fullname, roles.student],
         function (err) {
           if (err) {
             reject(err);

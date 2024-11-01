@@ -1,4 +1,4 @@
-import db from "../config/users.js";
+import db from "../config/users-db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -15,11 +15,11 @@ export const login = (req, res) => {
     [emailOrUsername, emailOrUsername],
     async (err, row) => {
       if (err) {
-        res.status(500).json({ message: "There was a server error" });
+        return res.status(500).json({ message: "There was a server error" });
       }
 
       if (!row) {
-        res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
 
       const result = new Promise((resolve) => {
@@ -38,8 +38,8 @@ export const login = (req, res) => {
       });
 
       if (await result) {
-        const token = jwt.sign({ email, id: row.id }, secretKey);
-        res.status(200).json({ message: "Login successful", token });
+        const token = jwt.sign({ emailOrUsername, id: row.id }, secretKey);
+        return res.status(200).json({ message: "Login successful", token });
       }
     }
   );
