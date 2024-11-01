@@ -1,40 +1,46 @@
 import db from "../config/users.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
-export const login = async (req, res) => {
+dotenv.config();
+
+const secretKey = process.env.SECRET_KEY;
+
+export const login = (req, res) => {
   const { emailOrUsername, password } = req.body;
 
-  try {
-    const userExist = await new Promise((resolve, reject) => {
-      db.get(
-        `SELECT username,email,password FROM users WHERE username = ? OR email = ?`,
-        [emailOrUsername, emailOrUsername],
-        (err, row) => {
+  db.get(
+    `SELECT id, username,email,password FROM users WHERE username = ? OR email = ?`,
+    [emailOrUsername, emailOrUsername],
+    async (err, row) => {
+      if (err) {
+        res.status(500).json({ message: "There was a server error" });
+      }
+
+      if (!row) {
+        res.status(404).json({ message: "User not found" });
+      }
+
+      const result = new Promise((resolve) => {
+        bcrypt.compare(password, row.password, (err, result) => {
           if (err) {
-            reject(err);
-          } else {
-            resolve(row);
+            res.status(500).json({ message: "There was a server error" });
+            resolve(false);
           }
-        }
-      );
-    });
 
-    if (!userExist) {
-      return res.status(404).json({ message: "Username or email not found" });
+          if (!result) {
+            res.status(401).json({ message: "Incorrect password" });
+            resolve(false);
+          }
+          resolve(true);
+        });
+      });
+
+      if (await result) {
+        const token = jwt.sign({ email, id: row.id }, secretKey);
+        res.status(200).json({ message: "Login successful", token });
+      }
     }
-
-    const passwordMatch = await bcrypt.compare(password, userExist.password);
-
-    if (!passwordMatch) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    res.status(200).json({ message: "Login successful" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({
-      message: "There was a problem in the server",
-      error: err.message,
-    });
-  }
+  );
 };
