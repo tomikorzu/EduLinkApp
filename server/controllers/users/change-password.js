@@ -1,4 +1,4 @@
-import db from "../../config/users-db";
+import db from "../../config/users-db.js";
 import bcrypt from "bcrypt";
 
 const changePassword = async (req, res) => {
