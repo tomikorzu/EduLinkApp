@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 import roles from "../constants/roles.js";
 
-export const register = (req, res) => {
+const register = (req, res) => {
   const { username, email, password, fullname } = req.body;
 
   db.get(
@@ -43,3 +43,5 @@ export const register = (req, res) => {
     }
   );
 };
+
+export default register;

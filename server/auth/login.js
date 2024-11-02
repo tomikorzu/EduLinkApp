@@ -7,7 +7,7 @@ dotenv.config();
 
 const secretKey = process.env.SECRET_KEY;
 
-export const login = (req, res) => {
+const login = (req, res) => {
   const { emailOrUsername, password } = req.body;
 
   db.get(
@@ -44,3 +44,5 @@ export const login = (req, res) => {
     }
   );
 };
+
+export default login;
