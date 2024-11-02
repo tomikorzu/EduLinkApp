@@ -48,36 +48,36 @@ async function isValidPassword(req, res, id, oldPassword, newPassword) {
     db.get(`SELECT password FROM users WHERE id = ?`, id, async (err, row) => {
       if (err) {
         res.status(500).json({ message: "There was a server error" });
-        resolve(false);
+        return resolve(false);
       }
 
       if (!row) {
         res.status(404).json({ message: "User not found" });
-        resolve(false);
+        return resolve(false);
       }
 
       bcrypt.compare(oldPassword, row.password, (err, result) => {
         if (err) {
           res.status(500).json({ message: "There was a sever error" });
-          resolve(false);
+          return resolve(false);
         }
 
         if (!result) {
           res.status(401).json({ message: "Password not match" });
-          resolve(false);
+          return resolve(false);
         }
 
         bcrypt.compare(oldPassword, newPassword, (err) => {
           if (err) {
             res.status(500).json({ message: "There was a server error" });
-            resolve(false);
+            return resolve(false);
           }
 
           if (oldPassword === newPassword) {
             res.status(409).json({
               message: "The new password can not be the same that the older",
             });
-            resolve(false);
+            return resolve(false);
           }
 
           resolve(true);
@@ -97,7 +97,7 @@ async function applyChange(req, res, id, newPassword) {
       (err) => {
         if (err) {
           res.status(500).json({ message: "There was a sever error" });
-          resolve(false);
+          return resolve(false);
         }
         resolve(true);
       }
