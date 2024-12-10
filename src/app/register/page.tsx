@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { fetchAuth } from "@/utils/fetch/auth";
+import { fetchData } from "@/utils/fetch/data";
 
 export default function RegisterPage() {
   const [fullname, setFullname] = useState("");
@@ -10,8 +10,24 @@ export default function RegisterPage() {
 
   async function handleSumbit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const res = await fetchAuth({ fullname, email, password }, "register");
-    console.log(res);
+    const res = await fetchData(
+      "auth/register",
+      "POST",
+      {
+        fullname,
+        email,
+        password,
+      },
+      null
+    );
+    if (res.status === 201) {
+      if (res.data.token) {
+        const token = res.data.token;
+        sessionStorage.setItem("token", token);
+      }
+    } else {
+      console.error(res.data.errors);
+    }
   }
 
   return (

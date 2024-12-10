@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchAuth } from "@/utils/fetch/auth";
+import { fetchData } from "@/utils/fetch/data";
 import { useState } from "react";
 
 export default function LoginPage() {
@@ -9,7 +9,7 @@ export default function LoginPage() {
 
   async function handleSumbit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const res = await fetchAuth({ email, password }, "login");
+    const res = await fetchData("auth/login", "POST", { email, password }, null);
     console.log(res);
   }
   return (
