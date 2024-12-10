@@ -9,12 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.47.3",
+    "@vercel/postgres": "^0.10.0",
+    "bcrypt": "^5.1.1",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.0.4",
+    "next-list": "^1.0.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sass": "^1.82.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
