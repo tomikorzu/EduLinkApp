@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function LoginRegister(
+export default async function LoginHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

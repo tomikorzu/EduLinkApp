@@ -13,14 +13,20 @@ export function createToken(user: object) {
   return token;
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string | undefined) {
   if (!secret) {
     throw new Error("JWT_SECRET is not defined");
   }
 
   try {
-    const decoded = jwt.verify(token, secret);
-    return decoded;
+    if (token) {
+      const tokenToVerify = token.split(" ")[1];
+
+      const decoded = jwt.verify(tokenToVerify, secret);
+      return decoded;
+    } else {
+      return "Token is not provided";
+    }
   } catch (error) {
     console.error(error, "Error verifying token");
     return null;
