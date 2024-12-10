@@ -8,7 +8,7 @@ export const openSans = Open_Sans({
 
 export const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400", "700"], 
   display: "swap",
 });
 
