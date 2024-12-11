@@ -1,4 +1,3 @@
-import { supabase } from "@/utils/supaBaseClient";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getCourses } from "./coursesService";
 import { verifyIsAdmin } from "../jwt/tokens";
