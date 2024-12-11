@@ -1,3 +1,9 @@
+import "./loading.css";
+
 export default function Loading() {
-  return <div>Loading...</div>;
+  return (
+    <main className="loading-container">
+      <span className="loading-spinner"></span>
+    </main>
+  );
 }
