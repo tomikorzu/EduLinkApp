@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/pages/api/route.js"
-, "src/pages/api/auth/register/registerMiddleware.js"  ],
+, "src/pages/api/auth/register/registerMiddleware.js", "src/pages/api/auth/login/loginMiddleware.js"  ],
   "exclude": ["node_modules"]
 }

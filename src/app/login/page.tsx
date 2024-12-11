@@ -9,7 +9,12 @@ export default function LoginPage() {
 
   async function handleSumbit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const res = await fetchData("auth/login", "POST", { email, password }, null);
+    const res = await fetchData(
+      "auth/login",
+      "POST",
+      { email, password },
+      null
+    );
     console.log(res);
   }
   return (

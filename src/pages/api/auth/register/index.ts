@@ -35,7 +35,7 @@ export default async function RegisterHandler(
 
       return res
         .status(201)
-        .json({ message: "User registered successfully", token });
+        .json({ message: "Registered successfully!", token });
     } catch (error) {
       console.error(error);
       return res
