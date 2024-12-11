@@ -39,3 +39,18 @@ export async function verifyPasswordOfEmail(password: string, email: string) {
 
   return true;
 }
+
+export async function getUser(email: string) {
+  const { data, error } = await supabase
+    .from("users")
+    .select("id, email, role, fullname")
+    .eq("email", email)
+    .single();
+
+  if (error) {
+    console.log(error);
+    throw new Error("An error occurred while getting the user");
+  }
+
+  return data;
+}
