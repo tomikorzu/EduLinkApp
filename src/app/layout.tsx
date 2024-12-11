@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { openSans } from "@/assets/fonts/google";
 import "./index.scss";
-
 import { AuthProvider } from "@/shared/providers/auth";
+import SideBar from "@/shared/components/SideBar/";
+import { AlertProvider } from "@/shared/providers/alert";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export const metadata: Metadata = {
   title: "EduLink",
-  description: "This ",
+  description: "This is EduLink",
 };
 
 export default function RootLayout({
@@ -16,9 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
-        <body className={openSans.className}>{children}</body>
-      </AuthProvider>
+      <head />
+      <body className={openSans.className}>
+        <AlertProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </AlertProvider>
+      </body>
     </html>
   );
 }
