@@ -1,0 +1,31 @@
+:root {
+  --danger-bg-color: #f54e4e;
+  --succes-bg-color: #189b33;
+  --alert-text-color: #f1f1f1;
+}
+
+.alert-menu {
+  border-radius: 5px;
+  padding: 15px;
+  position: fixed;
+  color: var(--alert-text-color);
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+
+  i {
+    transform: translateY(1.25px);
+  }
+}
+
+.danger {
+  background-color: var(--danger-bg-color);
+}
+.succes {
+  background-color: var(--succes-bg-color);
+}
