@@ -24,17 +24,6 @@ export async function getCourses(isTokenValid: boolean) {
   }
 }
 
-export async function joinCourse(_courseName: string, courseCode: string) {
-  const { data, error } = await supabase
-    .from("courses")
-    .select("*")
-    .eq("courseCode", courseCode);
-  if (error) {
-    throw error;
-  }
-  return data;
-}
-
 export async function getCourse(courseId: string) {
   const { data, error } = await supabase
     .from("courses")
