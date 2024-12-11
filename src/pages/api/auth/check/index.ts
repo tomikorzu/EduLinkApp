@@ -12,6 +12,6 @@ export default async function CheckHandler(
 
     const user = verifyToken(token);
 
-    return res.status(200).json({ message: "Check is here", user });
+    return res.status(200).json({ user });
   }
 }
