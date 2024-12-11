@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { openSans } from "@/assets/fonts/google";
 import "./index.scss";
 import { AuthProvider } from "@/shared/providers/auth";
-import SideBar from "@/shared/components/SideBar/";
 import { AlertProvider } from "@/shared/providers/alert";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 

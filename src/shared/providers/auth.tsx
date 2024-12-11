@@ -9,7 +9,7 @@ interface AuthContextType {
   setIsAuthenticate: React.Dispatch<React.SetStateAction<boolean>>;
   isAdmin: boolean;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
-  user: object | string | null;
+  user?: object | string | null;
   token: string | null;
 }
 
