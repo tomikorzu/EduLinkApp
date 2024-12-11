@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { AlertContext } from "../providers/alert";
 
 export function useLogout() {
-  const { setIsAuthenticate } = useContext(AuthContext);
-  const { showAlert } = useContext(AlertContext);
+  const { setIsAuthenticate } = useContext(AuthContext)!;
+  const { showAlert } = useContext(AlertContext)!;
 
   const router = useRouter();
   const logout = () => {

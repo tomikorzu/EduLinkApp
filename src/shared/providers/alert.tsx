@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
 import UserAlert from "../components/UserAlert/UserAlert";
 
 interface AlertContextType {
-  showAlert: (message: string) => void;
+  showAlert: (message: string, danger: boolean) => void;
 }
 
 export const AlertContext = createContext<AlertContextType | null>(null);

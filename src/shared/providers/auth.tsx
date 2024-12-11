@@ -4,12 +4,23 @@ import { useState, useEffect, createContext } from "react";
 import { fetchData } from "@/utils/fetch/data";
 import Loading from "../components/Loading/Loading";
 
+interface UserData {
+  id: number;
+  email: string;
+  role: string;
+  fullname: string;
+}
+
+interface User {
+  user: UserData | null;
+}
+
 interface AuthContextType {
   isAuthenticate: boolean;
   setIsAuthenticate: React.Dispatch<React.SetStateAction<boolean>>;
   isAdmin: boolean;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
-  user?: object | string | null;
+  user: User | null;
   token: string | null;
 }
 
@@ -18,7 +29,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticate, setIsAuthenticate] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -30,7 +41,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser: User = JSON.parse(storedUser);
+      setUser(parsedUser);
       setIsAuthenticate(true);
     }
   }, []);

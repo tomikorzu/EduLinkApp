@@ -11,7 +11,7 @@ import JoinCourseBtn from "./components/JoinCourse/JoinCourseBtn";
 export default function SideBar() {
   const { user } = useContext(AuthContext)!;
 
-  const isAdmin = user?.user.role === "admin"
+  const isAdmin = user?.user?.role === "admin";
 
   return (
     <header className="fixed md:left-0 bg-[#333] text-[#f1f1f1] md:top-0 md:bottom-0 md:w-[200px]">
