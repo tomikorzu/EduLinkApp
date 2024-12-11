@@ -15,7 +15,14 @@ export default function LoginPage() {
       { email, password },
       null
     );
-    console.log(res);
+    if (res.status === 200) {
+      if (res.data.token) {
+        const token = res.data.token;
+        sessionStorage.setItem("token", token);
+      }
+    } else {
+      console.error(res.data.errors);
+    }
   }
   return (
     <main className="flex items-center justify-center min-h-screen bg-[#555]">
