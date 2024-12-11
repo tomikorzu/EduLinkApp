@@ -1,13 +1,27 @@
 "use client";
 
 import { fetchData } from "@/utils/fetch/data";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { AlertContext } from "@/shared/providers/alert";
+import { AuthContext } from "@/shared/providers/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function handleSumbit(e: React.FormEvent<HTMLFormElement>) {
+  const { showAlert } = useContext(AlertContext);
+  const { user, token } = useContext(AuthContext);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (token || user) {
+      router.push("/dashboard");
+    }
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const res = await fetchData(
       "auth/login",
@@ -20,13 +34,15 @@ export default function LoginPage() {
         const token = res.data.token;
         sessionStorage.setItem("token", token);
       }
+      showAlert(res.data.message, false);
+      router.push("/dashboard");
     } else {
       console.error(res.data.errors);
     }
   }
   return (
     <main className="flex items-center justify-center min-h-screen bg-[#555]">
-      <form onSubmit={handleSumbit} className="bg-[#333] flex flex-col gap-2 ">
+      <form onSubmit={handleSubmit} className="bg-[#333] flex flex-col gap-2 ">
         <input
           type="email"
           value={email}
