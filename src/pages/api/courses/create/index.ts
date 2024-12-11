@@ -33,9 +33,14 @@ export default async function createCourseHandler(
       return res
         .status(201)
         .json({ message: "Course created successfully", data: result });
-    } catch (error: any) {
-      console.error(error);
-      return res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        return res.status(500).json({ error: error.message });
+      } else {
+        console.error("Unexpected error", error);
+        return res.status(500).json({ error: "An unexpected error occurred" });
+      }
     }
   } else {
     res.status(405).json({ error: "Method not allowed" });
