@@ -45,3 +45,12 @@ export const verifyIsAdmin = (token: string | undefined) => {
 export function decodeToken(token: string) {
   return jwt.decode(token);
 }
+
+export const getUserByToken = (token: string | undefined) => {
+  const decoded = verifyToken(token);
+  if (decoded) {
+    const user = decoded as { user: { id: number } };
+    return user.user;
+  }
+  return null;
+};
