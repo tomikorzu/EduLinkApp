@@ -30,11 +30,13 @@ export default function CreateCourseModal() {
         type="text"
         value={courseName}
         onChange={(e) => setCourseName(e.target.value)}
+        placeholder="Course Name"
       />
       <input
         type="text"
         value={courseCode}
         onChange={(e) => setCourseCode(e.target.value)}
+        placeholder="Course Code"
       />
       <button type="submit" className="bg-[#2ee01d] text-[#f1f1f1]">
         Create Course

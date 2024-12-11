@@ -31,6 +31,17 @@ export function verifyToken(token: string | undefined) {
   }
 }
 
+export const verifyIsAdmin = (token: string | undefined) => {
+  const decoded = verifyToken(token);
+  if (decoded) {
+    const user = decoded as { user: { role: string } };
+    if (user.user.role === "admin") {
+      return true;
+    }
+  }
+  return false;
+};
+
 export function decodeToken(token: string) {
   return jwt.decode(token);
 }
