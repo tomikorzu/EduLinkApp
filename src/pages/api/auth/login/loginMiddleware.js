@@ -16,11 +16,17 @@ export const loginMiddleware = [
     body("password")
         .trim()
         .notEmpty()
-        .withMessage("Password is required")
-        .isLength({ min: 8 })
-        .withMessage("Password must be at least 8 characters long")
-        .matches(/^[a-zA-Z0-9!@#\$%\^&\*]+$/)
-        .withMessage("Password contains invalid characters")
+        .withMessage("Password cannot be empty")
+        .isLength({ min: 8, max: 40 })
+        .withMessage("Password must be between 8 and 30 characters long")
+        .matches(/\d/)
+        .withMessage("Password must contain at least one number")
+        .matches(/[A-Z]/)
+        .withMessage("Password must contain at least one uppercase letter")
+        .matches(/[!@#\$%\^&\*]/)
+        .withMessage(
+            "Password must contain at least one special character (!@#$%^&*)"
+        )
         .custom(async (value, { req }) => {
             await verifyPasswordOfEmail(value, req.body.email);
         }),
