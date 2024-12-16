@@ -10,7 +10,6 @@ export default async function TeacherHandler(
 ) {
   if (req.method === "GET") {
     const { id } = req.query;
-    console.log(id);
 
     const teacherData = await getTeacherById(id as string);
 

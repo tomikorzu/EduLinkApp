@@ -12,7 +12,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
 
   const { showAlert } = useContext(AlertContext)!;
-  const { user, token } = useContext(AuthContext)!;
+  const { token } = useContext(AuthContext)!;
 
   const router = useRouter();
 

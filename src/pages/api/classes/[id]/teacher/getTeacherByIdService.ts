@@ -20,8 +20,6 @@ export async function getTeacherById(id: string) {
 }
 
 export async function getTeacherPersonalData(id: string) {
-    console.log(id);
-    
   const { data, error } = await supabase
     .from("users")
     .select("fullname, email, id, image")
