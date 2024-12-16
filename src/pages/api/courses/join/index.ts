@@ -3,8 +3,8 @@ import { joinCourse } from "./joinCourseService";
 import { getUserByToken, verifyToken } from "../../jwt/tokens";
 
 export default async function JoinCourseHandler(
-    req: NextApiRequest,
-    res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ) {
   if (req.method === "POST") {
     const { courseName, courseCode } = req.body;
@@ -26,6 +26,10 @@ export default async function JoinCourseHandler(
       return res
         .status(400)
         .json({ error: "Course name and code are required" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
 
     const isJoinded = await joinCourse(courseName, courseCode, user);
