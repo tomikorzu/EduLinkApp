@@ -60,7 +60,9 @@ export default function CoursePage({
                 key={cls.id}
                 name={cls.name}
                 description={cls.description}
-                url={course  ? `/dashboard/${course.id}/${cls.id}`: "/dashboard"}
+                url={
+                  course ? `/dashboard/${course.id}/${cls.id}` : "/dashboard"
+                }
               />
             );
           })}
