@@ -17,7 +17,7 @@ export default function RegisterPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (token || user) {
+    if (token) {
       router.push("/dashboard");
     }
   }, []);

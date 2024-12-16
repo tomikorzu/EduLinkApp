@@ -20,10 +20,11 @@ export async function registerUser(
   email: string,
   password: string
 ) {
+  const created_at = new Date().toISOString().split("T")[0];
   const { data, error } = await supabase
     .from("users")
-    .insert([{ fullname, email, password }])
-    .select("id, email, role, fullname");
+    .insert([{ fullname, email, password, created_at }])
+    .select("id, email, role, fullname, created_at");
 
   if (error) {
     console.error(error, "Error registering user");
