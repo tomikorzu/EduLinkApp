@@ -1,6 +1,10 @@
 import { supabase } from "@/utils/supaBaseClient";
 
-export async function joinCourse(courseName: string, courseCode: string) {
+export async function joinCourse(
+  courseName: string,
+  courseCode: string,
+  user: object
+) {
   const { data, error } = await supabase
     .from("courses")
     .select("name, code")
@@ -11,8 +15,19 @@ export async function joinCourse(courseName: string, courseCode: string) {
   }
 
   if (courseCode === data.code) {
-    return true;
+    const isUserJoined = await joinUserToCourse(user);
+    if (isUserJoined) {
+      return true;
+    }
   } else {
     return "Course code is incorrect";
   }
+}
+
+export async function joinUserToCourse(user: object) {
+  const { data, error } = await supabase.from("users_courses").insert(user);
+  if (error) {
+    return error;
+  }
+  return data;
 }
