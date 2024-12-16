@@ -9,7 +9,7 @@ export default function CreateTaskModal({
   currentClassId,
 }: {
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
-  currentClassId: number;
+  currentClassId: string;
 }) {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");

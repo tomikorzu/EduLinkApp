@@ -6,7 +6,7 @@ import CreateTaskModal from "../CreateTaskModel/CreateTaskModel";
 export default function CreateTaskBtn({
   currentClassID,
 }: {
-  currentClassID: number;
+  currentClassID: string;
 }) {
   const [modal, setModal] = useState(false);
   return (
